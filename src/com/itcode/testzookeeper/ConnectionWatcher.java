@@ -13,7 +13,7 @@ import java.util.concurrent.CountDownLatch;
  */
 public class ConnectionWatcher implements Watcher {
     private static final int SESSION_TIMEOUT = 5000;
-    CountDownLatch countDownLatch = new CountDownLatch(1);
+    private CountDownLatch countDownLatch = new CountDownLatch(1);
     protected ZooKeeper zk;
 
     public void connect(String host) throws IOException, InterruptedException {
