@@ -16,9 +16,15 @@ public class ConnectionWatcher implements Watcher {
     private CountDownLatch countDownLatch = new CountDownLatch(1);
     protected ZooKeeper zk;
 
-    public void connect(String host) throws IOException, InterruptedException {
-        zk = new ZooKeeper(host, SESSION_TIMEOUT, this);
-        countDownLatch.await();
+    public ZooKeeper connect(String host) {
+        try {
+            zk = new ZooKeeper(host, SESSION_TIMEOUT, this);
+            countDownLatch.await();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return zk;
     }
 
     @Override

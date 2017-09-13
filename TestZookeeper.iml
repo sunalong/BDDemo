@@ -54,7 +54,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="zookeeper-3.4.9" level="project" />
     <orderEntry type="module-library" scope="TEST">
       <library name="JUnit4">
         <CLASSES>
@@ -65,5 +64,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="zookeeper-3.4.6" level="project" />
   </component>
 </module>
