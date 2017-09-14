@@ -26,7 +26,7 @@ public class TestLock {
                     lockService.doService(new IDoTemplete() {
                         @Override
                         public boolean doSomething() {
-                            LOG.info("我要修改一个文件。。。。。ThreadId:"+threadId);
+                            LOG.info("开始修改一个文件。。。线程ID:"+threadId);
                             return true;
                         }
                     });

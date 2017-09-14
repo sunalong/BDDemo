@@ -12,7 +12,7 @@ public class LockService {
     public void doService(IDoTemplete iDoTemplete) {
         ConnectionWatcher connectionWatcher = new ConnectionWatcher();
         ZooKeeper zooKeeper = connectionWatcher.connect(Constants.ZK_LOCK_HOSTS);
-        DistributedLock distributedLock = new DistributedLock(zooKeeper);
+        DistributedLock distributedLock = new DistributedLock(zooKeeper,iDoTemplete);
         String data = "该节点由线程"+Thread.currentThread().getName()+"创建";
         distributedLock.createGroupPath(Constants.ZK_LOCK_GROUP_PATH,data);
         boolean canExec = distributedLock.currentCanExec();
@@ -20,7 +20,7 @@ public class LockService {
             boolean haveDone = iDoTemplete.doSomething();
             TestLock.threadSemaphore.countDown();
             if(haveDone)
-                distributedLock.release();
+                distributedLock.releaseDoneNode();
         }
     }
 }

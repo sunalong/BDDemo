@@ -11,4 +11,6 @@ public class Constants {
     public static final String ZK_PROVICER_PATH = ZK_REGISTRY_PATH + "/provider";
     public static final String ZK_LOCK_HOSTS = "mini1:2181";
     public static final String ZK_LOCK_GROUP_PATH = "/distributedlock";
+    public static final String ZK_LOCK_SUB_PATH = ZK_LOCK_GROUP_PATH+"/sub";
 }
+
