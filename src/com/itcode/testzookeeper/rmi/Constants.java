@@ -9,4 +9,6 @@ public class Constants {
     public static final int ZK_SESSION_TIMEOUT = 5000;
     public static final String ZK_REGISTRY_PATH = "/registry";
     public static final String ZK_PROVICER_PATH = ZK_REGISTRY_PATH + "/provider";
+    public static final String ZK_LOCK_HOSTS = "mini1:2181";
+    public static final String ZK_LOCK_GROUP_PATH = "/distributedlock";
 }
