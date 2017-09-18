@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="libs1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/log4j-1.2.16.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/slf4j-log4j12-1.6.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/netty-3.10.5.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/slf4j-api-1.6.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/zookeeper-3.4.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jline-0.9.94.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
