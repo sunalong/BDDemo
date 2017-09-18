@@ -1,52 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3dc76d13-b4c6-49c2-acb3-1f45dd8d85a2" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/jline_0_9_94.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/zookeeper_3_4_6.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/zookeeper_3_4_9.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/LICENSE" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestZookeeper.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/hamcrest-core-1.3.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/junit-4.12.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/libs/jline-0.9.94.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/libs/log4j-1.2.16.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/libs/netty-3.10.5.Final.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/libs/slf4j-api-1.6.1.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/libs/slf4j-log4j12-1.6.1.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/libs/zookeeper-3.4.9.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/itcode/testzookeeper/ActiveKeyValueStore.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/itcode/testzookeeper/ConfigUpdater.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/itcode/testzookeeper/ConfigWatcher.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/itcode/testzookeeper/ConnectionWatcher.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/itcode/testzookeeper/CreateGroup.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/itcode/testzookeeper/DeleteGroup.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/itcode/testzookeeper/JoinGroup.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/itcode/testzookeeper/ListGroup.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/itcode/testzookeeper/TestZK.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/itcode/testzookeeper/distributedLock/DistributedLock.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/itcode/testzookeeper/distributedLock/IDoTemplete.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/itcode/testzookeeper/distributedLock/LockService.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/itcode/testzookeeper/distributedLock/TestLock.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/itcode/testzookeeper/rmi/Constants.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/itcode/testzookeeper/rmi/IHelloService.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/itcode/testzookeeper/rmi/rmiClient/RmiClient.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/itcode/testzookeeper/rmi/rmiClient/ServiceConsumer.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/itcode/testzookeeper/rmi/rmiClient/ZKClient.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/itcode/testzookeeper/rmi/rmiServer/HelloServiceImpl.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/itcode/testzookeeper/rmi/rmiServer/RmiServer.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/itcode/testzookeeper/rmi/rmiServer/ServiceProvider.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/itcode/testzookeeper/rmi/rmiServer/ZKServer.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/log4j.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/com/itcode/testzookeeper/TestZKTest.java" afterPath="" />
-    </list>
+    <list default="true" id="3dc76d13-b4c6-49c2-acb3-1f45dd8d85a2" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -63,8 +18,8 @@
       <file leaf-file-name="BDDemo.iml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/BDDemo.iml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+            <state relative-caret-position="221">
+              <caret line="13" column="9" lean-forward="true" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -74,7 +29,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/itcode/testzookeeper/ListGroup.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="340">
-              <caret line="23" column="42" lean-forward="true" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
+              <caret line="23" column="42" lean-forward="false" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -191,12 +146,6 @@
               <item name="BDDemo" type="b2602c69:ProjectViewProjectNode" />
               <item name="BDDemo" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="BDDemo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="BDDemo" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="testzookeeper" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -785,7 +734,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30450000" />
+    <option name="totallyTimeSpent" value="30511000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="6" />
@@ -1210,7 +1159,7 @@
     <entry file="file://$PROJECT_DIR$/src/com/itcode/testzookeeper/ListGroup.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
-          <caret line="23" column="42" lean-forward="true" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
+          <caret line="23" column="42" lean-forward="false" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
           <folding />
         </state>
       </provider>
@@ -1225,8 +1174,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/BDDemo.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        <state relative-caret-position="221">
+          <caret line="13" column="9" lean-forward="true" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="9" />
           <folding />
         </state>
       </provider>
