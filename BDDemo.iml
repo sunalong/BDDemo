@@ -19,5 +19,6 @@
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-highlighter:4.9.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-memory:4.9.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-analyzers-common:4.9.1" level="project" />
+    <orderEntry type="library" name="Maven: net.htmlparser.jericho:jericho-html:3.4" level="project" />
   </component>
 </module>

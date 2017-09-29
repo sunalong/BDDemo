@@ -44,5 +44,11 @@
             <artifactId>lucene-analyzers-common</artifactId>
             <version>4.9.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>net.htmlparser.jericho</groupId>
+            <artifactId>jericho-html</artifactId>
+            <version>3.4</version>
+        </dependency>
     </dependencies>
 </project>
