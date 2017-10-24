@@ -20,5 +20,6 @@
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-memory:4.9.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-analyzers-common:4.9.1" level="project" />
     <orderEntry type="library" name="Maven: net.htmlparser.jericho:jericho-html:3.4" level="project" />
+    <orderEntry type="library" name="Maven: com.janeluo:ikanalyzer:2012_u6" level="project" />
   </component>
 </module>
