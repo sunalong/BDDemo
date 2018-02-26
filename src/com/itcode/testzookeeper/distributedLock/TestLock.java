@@ -17,7 +17,7 @@ public class TestLock {
     public static void main(String[] args) {
 
         for (int i = 0; i < THREAD_NUM; i++) {
-           int threadId = i;
+           final int threadId = i;
             new Thread() {
                 @Override
                 public void run() {

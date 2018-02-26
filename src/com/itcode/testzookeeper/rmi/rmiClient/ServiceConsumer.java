@@ -37,7 +37,7 @@ public class ServiceConsumer {
     }
 
     //观察 /registry 节点的所有子节点并更新 urlList成员变量
-    private void watchZNode(ZooKeeper zooKeeper) {
+    private void watchZNode(final ZooKeeper zooKeeper) {
         try {
             List<String> nodeList = zooKeeper.getChildren(Constants.ZK_REGISTRY_PATH, new Watcher() {
                 @Override

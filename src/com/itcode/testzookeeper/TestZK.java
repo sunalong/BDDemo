@@ -14,7 +14,7 @@ public class TestZK {
     private static int sessionTimeout = 2000;
     ZooKeeper zooKeeper;
 
-    public void init(String path) throws Exception {
+    public void init(final String path) throws Exception {
         zooKeeper = new ZooKeeper(connectString, sessionTimeout, new Watcher() {
             @Override
             public void process(WatchedEvent event) {

@@ -17,7 +17,7 @@ public class TestZKTest {
         testZK.init(path);
     }
 
-    String path = "/TodayZnode";
+    String path = "/TodayZnode2";
     String data = "the test data";
 
     @org.junit.Test
