@@ -1,7 +1,5 @@
 package com.itcode.mapreduce.weather;
 
-import com.itcode.mapreduce.test.MyKey;
-import com.itcode.mapreduce.test.RunJob;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -36,7 +34,7 @@ public class WeatherSortApp {
         FileSystem fs = FileSystem.get(configuration);
 
         Job job = Job.getInstance(configuration);
-        job.setJarByClass(RunJob.class);
+        job.setJarByClass(WeatherSortApp.class);
 
         job.setJobName("weather");
 
