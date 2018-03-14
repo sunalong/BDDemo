@@ -20,16 +20,17 @@ import java.io.IOException;
  */
 public class TaskMapper extends Mapper<LongWritable, Text, KeyBean, Text> {
     @Override
-    protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-        String[] fieldArr = value.toString().split(",");
-        String LOG_DATE = fieldArr[0].replace("\"","");//时间,精确到小时;"2018-03-07 19:06:11"
-        String PRODUCT_ID = fieldArr[1].replace("\"","");
-        String UID = fieldArr[2].replace("\"","");
+    protected void map(LongWritable key, Text value, Context context) {
+        try {
+            String[] fieldArr = value.toString().split(",");
+            String LOG_DATE = fieldArr[0].replace("\"", "");//时间,精确到小时;"2018-03-07 19:06:11"
+            String PRODUCT_ID = fieldArr[1].replace("\"", "");
+            String UID = fieldArr[2].replace("\"", "");
 //        String ACCOUNT = fieldArr[3];
 //        String CLIENT_IP = fieldArr[4];
-        String IDFA = fieldArr[5].replace("\"","");
+            String IDFA = fieldArr[5].replace("\"", "");
 //        String DEVICE_TYPE = fieldArr[6];
-        String MZTGAME_UDID = fieldArr[7].replace("\"","");
+            String MZTGAME_UDID = fieldArr[7].replace("\"", "");
 //        String geoip_real_region_name = fieldArr[8];
 
 //        String time = fieldArr[0].substring(0,13);//时间,精确到小时，天，月
@@ -40,10 +41,14 @@ public class TaskMapper extends Mapper<LongWritable, Text, KeyBean, Text> {
 //        LogBean logBean = new LogBean();
 //       KeyBean(String PRODUCT_ID, String UID, String IDFA, String MZTGAME_UDID) {
 
-        KeyBean keyBean = new KeyBean(PRODUCT_ID,UID,IDFA,MZTGAME_UDID);
+            KeyBean keyBean = new KeyBean(PRODUCT_ID, UID, IDFA, MZTGAME_UDID);
 //        System.out.println("pid:"+PRODUCT_ID+" uid:"+UID+" idfa:"+IDFA+" mudid:"+MZTGAME_UDID);
 //        System.out.println(keyBean.toString());
-        context.write(keyBean,new Text(LOG_DATE));
+            context.write(keyBean, new Text(LOG_DATE));
+        } catch (Exception e) {
+            System.out.println("--------key:" + key + " value:" + value.toString());
+            e.printStackTrace();
+        }
     }
 
 }
