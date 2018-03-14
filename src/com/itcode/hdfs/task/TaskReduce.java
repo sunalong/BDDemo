@@ -12,30 +12,34 @@ import java.util.Map;
 public class TaskReduce extends Reducer<KeyBean,Text,Text,Text>{
 
     @Override
-    protected void reduce(KeyBean key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-        Map<String,Integer> hoursMap = new HashMap<>();//最多24*31*3条数据
-        Map<String,Integer> daysMap = new HashMap<>();
-        Map<String,Integer> monthsMap = new HashMap<>();
-        for(Text rawDate:values){//2018-03-07 19
-            if(!hoursMap.containsKey(rawDate)){
-                hoursMap.put(rawDate.toString(),1);
+    protected void reduce(KeyBean key, Iterable<Text> values, Context context) {
+        try {
+            Map<String,Integer> hoursMap = new HashMap<>();//最多24*31*3条数据
+            Map<String,Integer> daysMap = new HashMap<>();
+            Map<String,Integer> monthsMap = new HashMap<>();
+            for(Text rawDate:values){//2018-03-07 19
+                if(!hoursMap.containsKey(rawDate)){
+                    hoursMap.put(rawDate.toString(),1);
+                }
             }
-        }
-        System.out.println("\n\n-------小时到天：-------------------");
-        setMaps(hoursMap, daysMap,10);
-        System.out.println("--------天到月：------------------");
-        setMaps(daysMap, monthsMap,7);
-        StringBuilder sb = new StringBuilder();
+            System.out.println("\n\n-------小时到天：-------------------");
+            setMaps(hoursMap, daysMap,10);
+            System.out.println("--------天到月：------------------");
+            setMaps(daysMap, monthsMap,7);
+            StringBuilder sb = new StringBuilder();
 
-        Iterator<Map.Entry<String, Integer>> it = monthsMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, Integer> entry = it.next();
-            System.out.println(entry.getKey() + ":" + entry.getValue());
-            sb.append(entry.getKey() + ":" + entry.getValue()).append("\t");
-        }
+            Iterator<Map.Entry<String, Integer>> it = monthsMap.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry<String, Integer> entry = it.next();
+                System.out.println(entry.getKey() + ":" + entry.getValue());
+                sb.append(entry.getKey() + ":" + entry.getValue()).append("\t");
+            }
 
-        System.out.println(key.toString()+"<--->"+sb.toString());
-        context.write(new Text(key.toString()),new Text(sb.toString()));
+            System.out.println(key.toString()+"<--->"+sb.toString());
+            context.write(new Text(key.toString()),new Text(sb.toString()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setMaps(Map<String, Integer> hoursMap, Map<String, Integer> daysMap,int index) {
