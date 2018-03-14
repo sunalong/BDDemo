@@ -18,6 +18,7 @@ public class TaskReduce extends Reducer<KeyBean,Text,Text,Text>{
             Map<String,Integer> daysMap = new HashMap<>();
             Map<String,Integer> monthsMap = new HashMap<>();
             for(Text rawDate:values){//2018-03-07 19
+                System.out.println("------------------rawDate:"+rawDate);
                 if(!hoursMap.containsKey(rawDate)){
                     hoursMap.put(rawDate.toString(),1);
                 }

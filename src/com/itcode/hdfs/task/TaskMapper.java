@@ -23,7 +23,7 @@ public class TaskMapper extends Mapper<LongWritable, Text, KeyBean, Text> {
     protected void map(LongWritable key, Text value, Context context) {
         try {
             String[] fieldArr = value.toString().split(",");
-            String LOG_DATE = fieldArr[0].replace("\"", "");//时间,精确到小时;"2018-03-07 19:06:11"
+            String LOG_DATE = fieldArr[0].replace("\"", "").substring(0,13);//时间,精确到小时;"2018-03-07 19:06:11"
             String PRODUCT_ID = fieldArr[1].replace("\"", "");
             String UID = fieldArr[2].replace("\"", "");
 //        String ACCOUNT = fieldArr[3];

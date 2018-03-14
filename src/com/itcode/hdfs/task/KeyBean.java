@@ -76,13 +76,31 @@ public class KeyBean implements WritableComparable<KeyBean> {
 //            return -1;
 //        }
 
-        if (this.PRODUCT_ID.equals(keyBean.getPRODUCT_ID()) && this.UID.equals(keyBean.getUID())) {
-            if (this.IDFA.equals(keyBean.getIDFA()) || this.MZTGAME_UDID.equals(keyBean.getMZTGAME_UDID())) {
-                return 0;
+//        if (this.PRODUCT_ID.equals(keyBean.getPRODUCT_ID()) && this.UID.equals(keyBean.getUID())) {
+//            if (this.IDFA.equals(keyBean.getIDFA()) || this.MZTGAME_UDID.equals(keyBean.getMZTGAME_UDID())) {
+//                return 0;
+//            }
+//            return -1;
+//        }
+//        return -1;
+        int pidRet = this.getPRODUCT_ID().compareTo(keyBean.getPRODUCT_ID());
+        int uidRet = this.getUID().compareTo(keyBean.getUID());
+
+//        if (pidRet == 0 && uidRet == 0) {
+        if (pidRet == 0) {
+            if (uidRet == 0) {
+                int idfaRet = this.getIDFA().compareTo(keyBean.getIDFA());
+                int udidRet = this.getMZTGAME_UDID().compareTo(keyBean.getMZTGAME_UDID());
+                if (idfaRet == 0 || udidRet == 0) {
+                    return 0;
+                }
+                return idfaRet == 0 ? udidRet : idfaRet;
+            } else {
+                return uidRet;
             }
-            return -1;
+        } else {
+            return pidRet;
         }
-        return -1;
     }
 
     @Override
