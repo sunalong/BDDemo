@@ -9,7 +9,7 @@ import java.util.Map;
  * Created by along on 17/6/24.
  */
 public class ToLowerCase extends UDF {
-    private static Map<String, String> provinceMap = new HashMap<>();
+    private static Map<String, String> provinceMap = new HashMap<String,String>();
 
     static {
         provinceMap.put("136", "北京");
