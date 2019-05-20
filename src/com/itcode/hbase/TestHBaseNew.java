@@ -1,15 +1,14 @@
 package com.itcode.hbase;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.HColumnDescriptor;
-import org.apache.hadoop.hbase.HTableDescriptor;
-import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.filter.CompareFilter;
 import org.apache.hadoop.hbase.filter.FilterList;
 import org.apache.hadoop.hbase.filter.PrefixFilter;
 import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
+import org.apache.hadoop.hbase.util.Bytes;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,15 +23,17 @@ import java.util.Random;
  * Created by along on 17/9/21 10:30.
  * Email:466210864@qq.com
  */
-public class TestHBase {
+public class TestHBaseNew {
     Connection connection;
-    public static TableName tableName = TableName.valueOf("phoneDetail");
+    public static TableName tableName = TableName.valueOf("out_unified_goods_info_str");
+//    public static TableName tableName = TableName.valueOf("phoneDetail");
     public Random random = new Random();
 
     @Before
     public void setup() throws IOException {
         Configuration configuration = HBaseConfiguration.create();
-        configuration.set("hbase.zookeeper.quorum", "mini1,mini2,mini3");
+//        configuration.set("hbase.zookeeper.quorum", "mini1,mini2,mini3");
+        configuration.set("hbase.zookeeper.quorum", "uhadoop-evi34htx-master1,uhadoop-evi34htx-master2,uhadoop-evi34htx-core1");
         connection = ConnectionFactory.createConnection(configuration);
     }
 
@@ -71,8 +72,10 @@ public class TestHBase {
         table.put(list);
     }
 
+
+
     @Test
-    public void find() throws IOException {
+    public void find22() throws IOException {
         Table table = connection.getTable(tableName);
         Scan scan = new Scan("138100000000".getBytes(), "138997974636".getBytes());
         ResultScanner scanner = table.getScanner(scan);
@@ -81,6 +84,43 @@ public class TestHBase {
             Result next = iterator.next();
             byte[] typeValue = next.getValue("cf1".getBytes(), "type".getBytes());
             byte[] addressValue = next.getValue("cf1".getBytes(), "address".getBytes());
+            System.out.println(new String(typeValue, "UTF-8") + "<--->" + new String(addressValue, "UTF-8"));
+        }
+    }
+
+    public static String getRealRowKey(KeyValue kv) {
+        int rowlength = Bytes.toShort(kv.getBuffer(), kv.getOffset()+KeyValue.ROW_OFFSET);
+        String rowKey = Bytes.toStringBinary(kv.getBuffer(), kv.getOffset()+KeyValue.ROW_OFFSET + Bytes.SIZEOF_SHORT, rowlength);
+        return rowKey;
+    }
+    @Test
+    public void find() throws IOException {
+        Table table = connection.getTable(tableName);
+        Scan scan = new Scan("1".getBytes(), "191919".getBytes());
+//        Scan scan = new Scan();
+
+//        System.out.println("startKey:"+getRowKey("6"));
+        ResultScanner scanner = table.getScanner(scan);
+        String rowKey = null;
+//        for (Result result : scanner) {
+////            result.getRow()
+//            for (KeyValue kv : result.raw()) {
+//                int rowlength = Bytes.toShort(kv.getBuffer(), kv.getOffset() + KeyValue.ROW_OFFSET);
+//                rowKey = Bytes.toStringBinary(kv.getBuffer(), kv.getOffset() + KeyValue.ROW_OFFSET + Bytes.SIZEOF_SHORT, rowlength);
+//                System.out.println("rowKey:" + rowKey);
+//                if (!StringUtils.isBlank(rowKey)) {
+//                    break;
+//                }
+//            }
+//        }
+
+        Iterator<Result> iterator = scanner.iterator();
+        System.out.println("1111");
+        while (iterator.hasNext()) {
+        System.out.println("2222");
+            Result next = iterator.next();
+            byte[] typeValue = next.getValue("cf1".getBytes(), "goods_id".getBytes());
+            byte[] addressValue = next.getValue("cf1".getBytes(), "goods_name".getBytes());
             System.out.println(new String(typeValue, "UTF-8") + "<--->" + new String(addressValue, "UTF-8"));
         }
     }
