@@ -14,14 +14,12 @@ public class PhoenixJDBC implements Runnable{
     public static void main(String[] args) {
         String sqlCount = "select * -- count(*) \n" +
                 "from \"out_unified_goods_info\"\n" +
-                "limit 10 ";//查询ontime数据量
-//        exeSql(sqlDB);
-//        exeSql(sqlTab);
-
+                "WHERE \"ROW\" BETWEEN 1 AND 1000\n" +
+                "LIMIT 10\n";//查询ontime数据量
 
         ThreadPoolExecutor executor = new ThreadPoolExecutor(100, 400, 400, TimeUnit.MILLISECONDS,
-                new ArrayBlockingQueue<Runnable>(5));
-        for(int i=0;i<30;i++){
+                new ArrayBlockingQueue<Runnable>(   34));
+        for(int i=0;i<900;i++){
             PhoenixJDBC myTask = new PhoenixJDBC(sqlCount);
             executor.execute(myTask);
             System.out.println("线程池中线程数目："+executor.getPoolSize()+"，队列中等待执行的任务数目："+
@@ -41,12 +39,8 @@ public class PhoenixJDBC implements Runnable{
         Statement statement = null;
         ResultSet results = null;
         try {
-//            Class.forName("ru.yandex.clickhouse.ClickHouseDriver");
             Class.forName("org.apache.phoenix.jdbc.PhoenixDriver");
-//            connection = DriverManager.getConnection(address,"ycd_write","dUhKokKG");
             Properties pros = new Properties();
-//            pros.setProperty("user","ycd_write");
-//            pros.setProperty("password","dUhKokKG");
 //            pros.setProperty("max_execution_time","50000");
 //            pros.setProperty("socket_timeout","4000000");
 //            connection = DriverManager.getConnection(address,pros);
