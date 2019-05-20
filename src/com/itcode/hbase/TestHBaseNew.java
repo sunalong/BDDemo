@@ -25,7 +25,7 @@ import java.util.Random;
  */
 public class TestHBaseNew {
     Connection connection;
-    public static TableName tableName = TableName.valueOf("out_unified_goods_info_str");
+    public static TableName tableName = TableName.valueOf("out_unified_goods_info_str2");
 //    public static TableName tableName = TableName.valueOf("phoneDetail");
     public Random random = new Random();
 
@@ -96,7 +96,7 @@ public class TestHBaseNew {
     @Test
     public void find() throws IOException {
         Table table = connection.getTable(tableName);
-        Scan scan = new Scan("1".getBytes(), "191919".getBytes());
+        Scan scan = new Scan("1".getBytes(), "1000".getBytes());
 //        Scan scan = new Scan();
 
 //        System.out.println("startKey:"+getRowKey("6"));
@@ -119,9 +119,10 @@ public class TestHBaseNew {
         while (iterator.hasNext()) {
         System.out.println("2222");
             Result next = iterator.next();
+            byte[] idValue = next.getValue("cf1".getBytes(), "id".getBytes());
             byte[] typeValue = next.getValue("cf1".getBytes(), "goods_id".getBytes());
             byte[] addressValue = next.getValue("cf1".getBytes(), "goods_name".getBytes());
-            System.out.println(new String(typeValue, "UTF-8") + "<--->" + new String(addressValue, "UTF-8"));
+            System.out.println(new String(idValue,"UTF-8")+"<--->"+new String(typeValue, "UTF-8") + "<--->" + new String(addressValue, "UTF-8"));
         }
     }
 
