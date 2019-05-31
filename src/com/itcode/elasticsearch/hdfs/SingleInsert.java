@@ -31,7 +31,7 @@ public class SingleInsert {
 			IndexRequest request = new IndexRequest(
 			        "dim_1",   //索引
 			        "_doc",     // mapping type
-			        "1");     //文档id  
+			        "type");     //文档id
 			
 			// 2、准备文档数据
 			// 方式一：直接给JSON串

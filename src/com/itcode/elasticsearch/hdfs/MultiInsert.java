@@ -31,12 +31,12 @@ public class MultiInsert {
             // 1、创建批量操作请求
             BulkRequest request = new BulkRequest();
 
-//            String shopFieldsCommentJsonStr = "{"
-//                    + "\"dim_shop_id\":\"门店ID\","
-//                    + "\"shop_code\":\"门店编码\","
-//                    + "\"branch_code\":\"分公司编码\","
-//                    + "\"branch_name\":\"分公司名称\""
-//                    + "}";
+            String shopFieldsCommentJsonStr = "{"
+                    + "\"dim_shop_id\":\"门店ID\","
+                    + "\"shop_code\":\"门店编码\","
+                    + "\"branch_code\":\"分公司编码\","
+                    + "\"branch_name\":\"分公司名称\""
+                    + "}";
 
             String shopFieldsTypeJsonStr = "{"
                     + "\"dim_shop_id\":\"string\","
@@ -47,8 +47,8 @@ public class MultiInsert {
 
             String memberJsonStr = "";
             String channelJsonStr = "";
-            request.add(new IndexRequest("fuck_dim", "_doc_dim_shop", "7").source(shopFieldsTypeJsonStr,XContentType.JSON));
-//            request.add(new IndexRequest("_index_dim", "_doc_dim_shop", "2").source(shopFieldsTypeJsonStr,XContentType.JSON));
+            request.add(new IndexRequest("dim_1", "_doc", "type").source(shopFieldsTypeJsonStr,XContentType.JSON));
+            request.add(new IndexRequest("dim_1", "_doc", "comment").source(shopFieldsCommentJsonStr,XContentType.JSON));
 //            request.add(new IndexRequest("_index_dim", "_doc_dim_member", "2").source(XContentType.JSON, memberJsonStr));
 //            request.add(new IndexRequest("_index_dim", "_doc_dim_channel", "3").source(XContentType.JSON, channelJsonStr));
 
