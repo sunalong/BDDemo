@@ -13,8 +13,6 @@ import java.io.IOException;
 /**
  * 
  * @Description: 创建索引
- * @author lgs
- * @date 2018年6月23日
  *
  */
 public class CreateIndex {
@@ -23,7 +21,7 @@ public class CreateIndex {
 		try (RestHighLevelClient client = InitDemo.getClient();) {
 
 			// 1、创建 创建索引request 参数：索引名mess
-			CreateIndexRequest request = new CreateIndexRequest("dim_1");
+			CreateIndexRequest request = new CreateIndexRequest("hdfs");
 
 			// 2、设置索引的settings
 			request.settings(Settings.builder().put("index.number_of_shards", 3) // 分片数
@@ -34,7 +32,7 @@ public class CreateIndex {
 			// 3、设置索引的mappings
 			request.mapping("_doc",
 					"  {\n" +
-				    "    \"doc_dim_member\": {\n" +
+				    "    \"_doc\": {\n" +
 				    "      \"properties\": {\n" +
 				    "        \"message\": {\n" +
 				    "          \"type\": \"text\"\n" +
@@ -45,7 +43,7 @@ public class CreateIndex {
 					XContentType.JSON);
 
 			// 4、 设置索引的别名
-			request.alias(new Alias("mmm_dim_1"));
+			request.alias(new Alias("mmm_hdfs"));
 
 			// 5、 发送请求
 			// 5.1 同步方式发送请求

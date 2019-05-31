@@ -27,7 +27,7 @@ public class GetMulti {
         try (RestHighLevelClient client = InitDemo.getClient();) {
             // 1、创建获取文档请求
 			GetRequest request = new GetRequest(
-			        "dim_1",   //索引
+			        "hdfs",   //索引
 			        "_doc",     // mapping type
 //			        "type");     //文档id
 			        "dim");     //文档id
@@ -39,7 +39,7 @@ public class GetMulti {
 
             //request.fetchSourceContext(new FetchSourceContext(false)); //是否获取_source字段
             //选择返回的字段
-            String[] includes = new String[]{"dim_shop_id", "*"};
+            String[] includes = new String[]{"tableName", "*"};
             String[] excludes = Strings.EMPTY_ARRAY;
             FetchSourceContext fetchSourceContext = new FetchSourceContext(true, includes, excludes);
             request.fetchSourceContext(fetchSourceContext);
@@ -91,22 +91,6 @@ public class GetMulti {
                 }
             }
 
-
-            //异步方式发送获取文档请求
-			/*
-			ActionListener<GetResponse> listener = new ActionListener<GetResponse>() {
-			    @Override
-			    public void onResponse(GetResponse getResponse) {
-			        
-			    }
-			
-			    @Override
-			    public void onFailure(Exception e) {
-			        
-			    }
-			};
-			client.getAsync(request, listener);
-			*/
 
         } catch (IOException e) {
             e.printStackTrace();
