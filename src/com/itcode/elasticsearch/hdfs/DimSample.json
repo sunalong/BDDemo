@@ -1,0 +1,22 @@
+{
+  "_index": "dim_1",
+  "_type": "_doc",
+  "_id": "dim",
+  "_version": 4,
+  "found": true,
+  "_source": {
+    "tableName": "dim_shop",
+    "fieldsType": {
+      "dim_shop_id": "string",
+      "shop_code": "string",
+      "branch_code": "string",
+      "branch_name": "string"
+    },
+    "fieldsComment": {
+      "dim_shop_id": "门店ID",
+      "shop_code": "门店编码",
+      "branch_code": "分公司编码",
+      "branch_name": "分公司名称"
+    }
+  }
+}

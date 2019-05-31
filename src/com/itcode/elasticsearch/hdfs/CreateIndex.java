@@ -34,7 +34,7 @@ public class CreateIndex {
 			// 3、设置索引的mappings
 			request.mapping("_doc",
 					"  {\n" +
-				    "    \"_doc\": {\n" +
+				    "    \"doc_dim_member\": {\n" +
 				    "      \"properties\": {\n" +
 				    "        \"message\": {\n" +
 				    "          \"type\": \"text\"\n" +

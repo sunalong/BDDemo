@@ -36,6 +36,7 @@ public class SingleInsert {
 			// 2、准备文档数据
 			// 方式一：直接给JSON串
 			String jsonString = "{"
+			        + "\"tableName\":\"kimchy\","
 			        + "\"user\":\"kimchy\","
 			        + "\"dim_shop_id\":\"9D01\","
 			        + "\"postDate\":\"2013-01-30\","

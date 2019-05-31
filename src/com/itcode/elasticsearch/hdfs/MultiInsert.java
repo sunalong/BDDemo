@@ -45,10 +45,25 @@ public class MultiInsert {
                     + "\"branch_name\":\"string\""
                     + "}";
 
+            String newJsonStr ="{\n" +
+                    "    \"tableName\": \"dim_shop\",\n" +
+                    "    \"fieldsType\": {\n" +
+                    "      \"dim_shop_id\": \"string\",\n" +
+                    "      \"shop_code\": \"string\",\n" +
+                    "      \"branch_code\": \"string\",\n" +
+                    "      \"branch_name\": \"string\"\n" +
+                    "    },\n" +
+                    "    \"fieldsComment\": {\n" +
+                    "      \"dim_shop_id\": \"门店ID\",\n" +
+                    "      \"shop_code\": \"门店编码\",\n" +
+                    "      \"branch_code\": \"分公司编码\",\n" +
+                    "      \"branch_name\": \"分公司名称\"\n" +
+                    "    }\n" +
+                    "  }";
             String memberJsonStr = "";
             String channelJsonStr = "";
-            request.add(new IndexRequest("dim_1", "_doc", "type").source(shopFieldsTypeJsonStr,XContentType.JSON));
-            request.add(new IndexRequest("dim_1", "_doc", "comment").source(shopFieldsCommentJsonStr,XContentType.JSON));
+//            request.add(new IndexRequest("dim_1", "_doc", "type").source(shopFieldsTypeJsonStr,XContentType.JSON));
+            request.add(new IndexRequest("dim_1", "_doc", "dim").source(newJsonStr,XContentType.JSON));
 //            request.add(new IndexRequest("_index_dim", "_doc_dim_member", "2").source(XContentType.JSON, memberJsonStr));
 //            request.add(new IndexRequest("_index_dim", "_doc_dim_channel", "3").source(XContentType.JSON, channelJsonStr));
 

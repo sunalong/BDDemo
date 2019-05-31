@@ -30,7 +30,8 @@ public class GetMulti {
 			        "dim_1",   //索引
 			        "_doc",     // mapping type
 //			        "type");     //文档id
-			        "comment");     //文档id
+			        "dim");     //文档id
+//			        "comment");     //文档id
 //            GetRequest request = new GetRequest("dim_1");
             // 2、可选的设置
             //request.routing("routing");
@@ -54,7 +55,7 @@ public class GetMulti {
 			/*request.storedFields("message"); 
 			GetResponse getResponse = client.get(request);
 			String message = getResponse.getField("message").getValue();*/
-
+//            String message = getResponse.getField("message").getValue();
 
             //3、发送请求
             GetResponse getResponse = null;
