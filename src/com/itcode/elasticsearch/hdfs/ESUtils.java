@@ -26,6 +26,7 @@ import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.fetch.subphase.FetchSourceContext;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 public class ESUtils {
@@ -86,15 +87,65 @@ public class ESUtils {
      *
      * @param jsonStr
      * @param indexName 存储时一般为hdfs,
-     * @param id        一般设置为库名，如dm_pwd、dim
+     * @param idName    一般设置为库名，如dm_pwd、dim
      */
-    public static void insert(String jsonStr, String indexName, String idName) {
+    public static void insertSingle(String jsonStr, String indexName, String idName) {
         try (RestHighLevelClient client = InitDemo.getClient();) {
 
             // 1、创建批量操作请求
             BulkRequest request = new BulkRequest();
 
+//            request.add(new IndexRequest(indexName, "_doc", idName).source(jsonStr, XContentType.JSON));
             request.add(new IndexRequest(indexName, "_doc", idName).source(jsonStr, XContentType.JSON));
+
+            // 2、可选的设置
+            /*
+            request.timeout("2m");
+			request.setRefreshPolicy("wait_for");
+			request.waitForActiveShards(2);
+			*/
+
+            //3、发送请求
+            BulkResponse bulkResponse = client.bulk(request);
+
+            //4、处理响应
+            if (bulkResponse != null) {
+                for (BulkItemResponse bulkItemResponse : bulkResponse) {
+                    DocWriteResponse itemResponse = bulkItemResponse.getResponse();
+
+                    if (bulkItemResponse.getOpType() == DocWriteRequest.OpType.INDEX
+                            || bulkItemResponse.getOpType() == DocWriteRequest.OpType.CREATE) {
+                        IndexResponse indexResponse = (IndexResponse) itemResponse;
+                        //TODO 新增成功的处理
+                        System.out.println("新增文档成功，处理逻辑代码写到这里:" + indexResponse.toString());
+
+                    } else if (bulkItemResponse.getOpType() == DocWriteRequest.OpType.UPDATE) {
+                        UpdateResponse updateResponse = (UpdateResponse) itemResponse;
+                        //TODO 修改成功的处理
+                        System.out.println("新增文档成功，处理逻辑代码写到这里:" + updateResponse.toString());
+
+                    } else if (bulkItemResponse.getOpType() == DocWriteRequest.OpType.DELETE) {
+                        DeleteResponse deleteResponse = (DeleteResponse) itemResponse;
+                        //TODO 删除成功的处理
+                        System.out.println("TODO 删除成功的处理:" + deleteResponse.toString());
+                    }
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void insertMulti(List<String> jsonStrList, String indexName, String idName) {
+        try (RestHighLevelClient client = InitDemo.getClient();) {
+
+            // 1、创建批量操作请求
+            BulkRequest request = new BulkRequest();
+
+            for (int i = 0; i < jsonStrList.size(); i++) {
+                request.add(new IndexRequest(indexName, "_doc", idName).source(jsonStrList.get(i), XContentType.JSON));
+            }
 
             // 2、可选的设置
             /*
@@ -137,6 +188,7 @@ public class ESUtils {
 
     /**
      * 从ES中搜索数据
+     *
      * @param indexName
      * @param idName
      */

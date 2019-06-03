@@ -1,0 +1,28 @@
+[
+  {
+    "tableName": "dim_category",
+    "fieldsType": {
+      "dim_category_id":"string",
+      "update_time":"timestamp"
+    },
+    "fieldsComment": {
+      "dim_category_id":"品类id",
+      "update_time":"更新时间"
+    },
+    "fieldsaaaat": {
+      "dim_category_id":"asss",
+      "update_time":"sss"
+    }
+  },
+  {
+    "tableName": "dim_shop",
+    "fieldsType": {
+      "dim_shop_id":"string",
+      "update_time":"timestamp"
+    },
+    "fieldsComment": {
+      "dim_shop_id":"门店ID",
+      "update_time":"更新时间"
+    }
+  }
+]

@@ -1,105 +1,85 @@
 //数据样例如下：每个表一条数据
 
-{
-  "tableName": "dim_shop",
-  "fieldsType": {
-    "dim_shop_id": "string",
-    "shop_code": "string",
-    "branch_code": "string",
-    "branch_name": "string"
-  },
-  "fieldsComment": {
-    "dim_shop_id": "门店ID",
-    "shop_code": "门店编码",
-    "branch_code": "分公司编码",
-    "branch_name": "分公司名称"
-  }
-}
+//{
+//  "dbName": "dim",
+//  "tableList": [{
+//    "tableName": "dim_shop",
+//    "columns": [
+//      {"fieldsName": "dim_shop_id","type": "string","Comment": "门店ID"},
+//      {"fieldsName": "shop_code","type": "string","Comment": "门店编码"}
+//    ]
+//  },
+//    {
+//      "tableName": "dim_category",
+//      "columns": [
+//        {"fieldsName": "dim_category_id","type": "string","Comment": "品类id"},
+//        {"fieldsName": "category_code","type": "string","Comment": "品类编码"}
+//      ]
+//    }
+//  ]
+//}
+
+
 
 {
-  "tableName": "dim_shop",
-  "fieldsType": {
-    "dim_shop_id":"string",
-    "shop_code":"string",
-    "branch_code":"string",
-    "branch_name":"string",
-    "shop_name":"string",
-    "department_id":"string",
-    "department_code":"string",
-    "department_name":"string",
-    "province_id":"string",
-    "province_code":"string",
-    "province_name":"string",
-    "city_code":"string",
-    "city_name":"string",
-    "area_id":"string",
-    "area_name":"string",
-    "open_date":"string",
-    "close_date":"string",
-    "status":"string",
-    "seller_type_id":"string",
-    "seller_type_name":"string",
-    "seller_id":"string",
-    "seller_name":"string",
-    "actual_shop_id":"string",
-    "are_code":"string",
-    "are_name":"string",
-    "org_code":"string",
-    "org_name":"string",
-    "region_code":"string",
-    "region_name":"string",
-    "fin_open_date":"string",
-    "actual_open_date":"string",
-    "longitude":"string",
-    "latitude":"string",
-    "p_price_code":"string",
-    "p_price_name":"string",
-    "address":"string",
-    "source":"string",
-    "is_hc_enabled":"string",
-    "shop_type":"string",
-    "update_time":"timestamp"
-},
-  "fieldsComment": {
-    "dim_shop_id":"门店ID",
-    "shop_code":"门店编码",
-    "branch_code":"分公司编码",
-    "branch_name":"分公司名称",
-    "shop_name":"门店名称",
-    "department_id":"部门ID",
-    "department_code":"部门编码",
-    "department_name":"部门名称",
-    "province_id":"省id",
-    "province_code":"省编码",
-    "province_name":"省名称",
-    "city_code":"城市编码",
-    "city_name":"城市名称",
-    "area_id":"区/县id",
-    "area_name":"区/县名称",
-    "open_date":"开店日期",
-    "close_date":"闭店日期",
-    "status":"门店状态",
-    "seller_type_id":"业态类型",
-    "seller_type_name":"业态类型名称",
-    "seller_id":"业态id",
-    "seller_name":"业态名称",
-    "actual_shop_id":"报表实际编码",
-    "are_code":"营运大区ID",
-    "are_name":"营运大区名称",
-    "org_code":"大区ID",
-    "org_name":"大区名称",
-    "region_code":"区域ID",
-    "region_name":"区域名称",
-    "fin_open_date":"财务维护开业时间",
-    "actual_open_date":"实际开业时间",
-    "longitude":"经度",
-    "latitude":"纬度",
-    "p_price_code":"进价群编码",
-    "p_price_name":"进价群名称",
-    "address":"门店地址",
-    "source":"门店来源 1 辉创 2 WMS 3其他(现有门店)",
-    "is_hc_enabled":"是否启用辉创系统 0 否 1 是 2 永久启用辉创",
-    "shop_type":"门店类型 1:门店 2:配送中心",
-    "update_time":"更新时间"
-  }
+  "dbName": "dim", "tableList": [{
+    "tableName": "dim_shop","columns": [
+      {"fieldsName": "dim_shop_id","type": "string","Comment": "门店ID"},
+      {"fieldsName": "shop_code","type": "string","Comment": "门店编码"}
+    ]
+  },
+    {
+      "tableName": "dim_category","columns": [
+      {"fieldsName": "dim_category_id","type": "string","Comment": "品类id"},
+      {"fieldsName": "category_code","type": "string","Comment": "品类编码"}]
+    }
+  ]
 }
+
+//一：生成数据集
+//create table test.subdata as
+//SELECT  a.DB_ID,a.NAME
+//,b.TBL_ID,b.TBL_TYPE,b.TBL_NAME
+//,c.CD_ID
+//,d.COMMENT,d.COLUMN_NAME,d.TYPE_NAME,d.INTEGER_IDX
+//from hive.DBS as a
+//left join (SELECT TBL_ID,DB_ID,SD_ID,TBL_TYPE,TBL_NAME
+//from hive.TBLS
+//) as b on b.DB_ID = a.DB_ID
+//left join (
+//SELECT SD_ID,CD_ID
+//from hive.SDS
+//)as c on c.SD_ID = b.SD_ID
+//left join (
+//SELECT CD_ID,COMMENT,COLUMN_NAME,TYPE_NAME,INTEGER_IDX
+//from hive.COLUMNS_V2
+//)as d on d.CD_ID = c.CD_ID
+//WHERE b.TBL_NAME in('dim_shop','dim_category')
+//and a.DB_ID = 2984
+//order by a.DB_ID,b.TBL_ID,c.CD_ID,d.INTEGER_IDX
+
+//二：拼接字符串
+//select DB_ID,TBL_ID, TBL_TYPE, INTEGER_IDX
+//, CONCAT("\"dbName\": \"",NAME,"\", \"tableList\": [{") as db_head
+//, CONCAT("\"tabName\": \"",TBL_NAME,"\",\"columns\": [") as tab_head
+//, CONCAT("{\"fieldsName\": \"",COLUMN_NAME,"\",\"type\": \"",TYPE_NAME,"\",\"Comment\": \"",COMMENT,"\"},") as col_head
+//from test.subdata
+
+
+
+
+//{
+//  "tableName": "dim_shop",
+//  "fieldsType": {
+//    "dim_shop_id": "string",
+//    "shop_code": "string",
+//    "branch_code": "string",
+//    "branch_name": "string"
+//  },
+//  "fieldsComment": {
+//    "dim_shop_id": "门店ID",
+//    "shop_code": "门店编码",
+//    "branch_code": "分公司编码",
+//    "branch_name": "分公司名称"
+//  }
+//}
