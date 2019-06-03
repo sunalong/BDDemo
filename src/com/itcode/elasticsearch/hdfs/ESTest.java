@@ -1,31 +1,15 @@
 package com.itcode.elasticsearch.hdfs;
 
-import com.itcode.elasticsearch.es_hrset_client.InitDemo;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.elasticsearch.action.DocWriteRequest;
-import org.elasticsearch.action.DocWriteResponse;
-import org.elasticsearch.action.bulk.BulkItemResponse;
-import org.elasticsearch.action.bulk.BulkRequest;
-import org.elasticsearch.action.bulk.BulkResponse;
-import org.elasticsearch.action.delete.DeleteResponse;
-import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.action.update.UpdateResponse;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.common.xcontent.XContentType;
-
-import java.io.IOException;
-
-/**
- * @author lgs
- * @Description: 批量索引文档，即批量往索引里面放入文档数据.类似于数据库里面批量向表里面插入多行数据，一行数据就是一个文档
- * @date 2018年6月23日
- */
-public class MultiInsert {
-
+public class ESTest {
     public static void main(String[] args) {
-        String dimShopJsonStr ="{\n" +
+//        ESUtils.createIndex("hdfs");
+        String jsonStr = createJsonStr();
+//        ESUtils.insert(jsonStr, "hdfs", "dim");
+        ESUtils.search("hdfs", "dim");
+    }
+
+    private static String createJsonStr() {
+        String dimShopJsonStr = "{\n" +
                 "  \"tableName\": \"dim_shop\",\n" +
                 "  \"fieldsType\": {\n" +
                 "    \"dim_shop_id\":\"string\",\n" +
@@ -112,7 +96,6 @@ public class MultiInsert {
                 "    \"update_time\":\"更新时间\"\n" +
                 "  }\n" +
                 "}\n";
-        ESUtils.insert(dimShopJsonStr,"hdfs","dim");
+        return dimShopJsonStr;
     }
-
 }
