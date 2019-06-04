@@ -20,28 +20,25 @@
 //}
 
 
-
-{
-  "dbName": "dim", "tableList": [{
-    "tableName": "dim_shop","columns": [
+{"dbName": "dim", "tableList": [
+  {"tableName": "dim_shop","columns": [
       {"fieldsName": "dim_shop_id","type": "string","Comment": "门店ID"},
-      {"fieldsName": "shop_code","type": "string","Comment": "门店编码"}
-    ]
-  },
-    {
-      "tableName": "dim_category","columns": [
+      {"fieldsName": "dim_shop_id","type": "string","Comment": "门店ID"},
+      {"fieldsName": "dim_shop_id","type": "string","Comment": "门店ID"},
+      {"fieldsName": "dim_shop_id","type": "string","Comment": "门店ID"},
+      {"fieldsName": "shop_code","type": "string","Comment": "门店编码"}]},
+  {"tableName": "dim_category","columns": [
       {"fieldsName": "dim_category_id","type": "string","Comment": "品类id"},
-      {"fieldsName": "category_code","type": "string","Comment": "品类编码"}]
-    }
-  ]
+      {"fieldsName": "category_code","type": "string","Comment": "品类编码"}]}]
 }
 
 //一：生成数据集
+//注意非空值的判断
 //create table test.subdata as
 //SELECT  a.DB_ID,a.NAME
 //,b.TBL_ID,b.TBL_TYPE,b.TBL_NAME
 //,c.CD_ID
-//,d.COMMENT,d.COLUMN_NAME,d.TYPE_NAME,d.INTEGER_IDX
+//,COALESCE(d.COMMENT,'') as COMMENT,d.COLUMN_NAME,d.TYPE_NAME,d.INTEGER_IDX
 //from hive.DBS as a
 //left join (SELECT TBL_ID,DB_ID,SD_ID,TBL_TYPE,TBL_NAME
 //from hive.TBLS
@@ -55,8 +52,11 @@
 //from hive.COLUMNS_V2
 //)as d on d.CD_ID = c.CD_ID
 //WHERE b.TBL_NAME in('dim_shop','dim_category')
-//and a.DB_ID = 2984
+//--  and a.DB_ID = 2984
 //order by a.DB_ID,b.TBL_ID,c.CD_ID,d.INTEGER_IDX
+//-- limit 100
+//
+//drop table test.subdata
 
 //二：拼接字符串
 //select DB_ID,TBL_ID, TBL_TYPE, INTEGER_IDX
