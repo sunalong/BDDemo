@@ -20,17 +20,84 @@
 //}
 
 
+//select  a.DB_ID
+//, a.TBL_ID
+//, a.TBL_TYPE
+//, a.db_head
+//, a.tab_head
+//, group_concat(col_head)
+//from (
+//  select DB_ID,TBL_ID, TBL_TYPE, INTEGER_IDX
+//  , CONCAT("\"dbName\": \"",NAME,"\", \"tableList\": [") as db_head
+//  , CONCAT("{\"tabName\": \"",TBL_NAME,"\",\"columns\": [") as tab_head
+//  , CONCAT("{\"fieldsName\": \"",COLUMN_NAME,"\",\"type\": \"",TYPE_NAME,"\",\"Comment\": \"",COMMENT,"\"},") as col_head
+//  from test.subdata
+//) as a
+//group by a.DB_ID
+//, a.TBL_ID
+//, a.TBL_TYPE
+//, a.db_head
+//, a.tab_head
+
+
+
+//set group_concat_max_len=100000000000;
+//
+//-- select  a.DB_ID
+//-- , a.TBL_ID
+//-- , a.TBL_TYPE
+//-- , a.db_head
+//-- , a.tab_head
+//-- , group_concat(col_head SEPARATOR '')  as col_set
+//-- from (
+//select  a.DB_ID
+//, a.TBL_ID
+//, a.TBL_TYPE
+//, a.db_head
+//-- , a.tab_head
+//, concat(a.tab_head,group_concat(col_head SEPARATOR ','),']}')  as col_set
+//from (
+//select DB_ID,TBL_ID, TBL_TYPE, INTEGER_IDX
+//, CONCAT("{\"dbName\": \"",NAME,"\", \"tableList\": [") as db_head
+//, CONCAT("{\"tabName\": \"",TBL_NAME,"\",\"columns\": [") as tab_head
+//, CONCAT("{\"fieldsName\": \"",COLUMN_NAME,"\",\"type\": \"",TYPE_NAME,"\",\"Comment\": \"",COMMENT,"\"}") as col_head
+//from test.subdata
+//) as a
+//group by a.DB_ID
+//, a.TBL_ID
+//, a.TBL_TYPE
+//, a.db_head
+//, a.tab_head
+//-- )
+//-- group by a.DB_ID
+//-- , a.TBL_ID
+//-- , a.TBL_TYPE
+//-- , a.db_head
+
+
+
+
+
 {"dbName": "dim", "tableList": [
   {"tableName": "dim_shop","columns": [
-      {"fieldsName": "dim_shop_id","type": "string","Comment": "门店ID"},
-      {"fieldsName": "dim_shop_id","type": "string","Comment": "门店ID"},
-      {"fieldsName": "dim_shop_id","type": "string","Comment": "门店ID"},
       {"fieldsName": "dim_shop_id","type": "string","Comment": "门店ID"},
       {"fieldsName": "shop_code","type": "string","Comment": "门店编码"}]},
   {"tableName": "dim_category","columns": [
       {"fieldsName": "dim_category_id","type": "string","Comment": "品类id"},
       {"fieldsName": "category_code","type": "string","Comment": "品类编码"}]}]
 }
+
+
+
+
+//{"dbName": "dim", "tableList": [
+//  {"tableName": "dim_shop","columns": [{"fieldsName": "dim_shop_id","type": "string","Comment": "门店ID"},{"fieldsName": "shop_code","type": "string","Comment": "门店编码"}]}  ==> ,
+//  {"tableName": "dim_category","columns": [{"fieldsName": "dim_category_id","type": "string","Comment": "品类id"},{"fieldsName": "category_code","type": "string","Comment": "品类编码"}]}  ==> ]
+//}
+
+
+
+
 
 //一：生成数据集
 //注意非空值的判断
@@ -66,20 +133,33 @@
 //from test.subdata
 
 
+//三：拼接json
+//set group_concat_max_len=100000000000;
+//
+//select  a.DB_ID -- 3.将db下的各table拼接在一起
+//, a.TBL_TYPE
+//, a.db_head
+//, CONCAT(a.db_head,group_concat(col_table_list SEPARATOR ','),']}')  as json_str -- 2.先将各表以逗号拼接为一个list，再将库名头与list拼接，同时以]}结尾
+//from (
+//select  a.DB_ID
+//, a.TBL_ID
+//, a.TBL_TYPE
+//, a.db_head
+//, concat(a.tab_head,group_concat(col_head SEPARATOR ','),']}')  as col_table_list -- 1.先将各col实体以逗号拼接为一个list，再将表头与list拼接，同时以]}结尾
+//from (
+//select DB_ID,TBL_ID, TBL_TYPE, INTEGER_IDX -- 1.初步组装所需要的 各db、table、col
+//, CONCAT("{\"dbName\": \"",NAME,"\", \"tableList\": [") as db_head
+//, CONCAT("{\"tabName\": \"",TBL_NAME,"\",\"columns\": [") as tab_head
+//, CONCAT("{\"fieldsName\": \"",COLUMN_NAME,"\",\"type\": \"",TYPE_NAME,"\",\"Comment\": \"",COMMENT,"\"}") as col_head
+//from test.subdata
+//) as a
+//group by a.DB_ID
+//, a.TBL_ID
+//, a.TBL_TYPE
+//, a.db_head
+//, a.tab_head
+//) as a
+//group by a.DB_ID
+//, a.TBL_TYPE
+//, a.db_head
 
-
-//{
-//  "tableName": "dim_shop",
-//  "fieldsType": {
-//    "dim_shop_id": "string",
-//    "shop_code": "string",
-//    "branch_code": "string",
-//    "branch_name": "string"
-//  },
-//  "fieldsComment": {
-//    "dim_shop_id": "门店ID",
-//    "shop_code": "门店编码",
-//    "branch_code": "分公司编码",
-//    "branch_name": "分公司名称"
-//  }
-//}
