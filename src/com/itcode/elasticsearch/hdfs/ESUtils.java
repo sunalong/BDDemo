@@ -259,7 +259,7 @@ public class ESUtils {
      * @param idName 表名在的库;如dim
      * @param tableName 要查的此表的各字段信息;如dim_shop
      */
-    public static void searchTable(String indexName, String idName,String tableName) {
+    public static String searchTable(String indexName, String idName,String tableName) {
         try (RestHighLevelClient client = InitDemo.getClient();) {
             // 1、创建获取文档请求
             GetRequest request = new GetRequest(
@@ -303,27 +303,30 @@ public class ESUtils {
                     String sourceAsString = getResponse.getSourceAsString(); //结果取成 String
 
                     DBBean dbBean = JSONObject.parseObject(sourceAsString, DBBean.class);
-                    System.out.println("DBBean:"+dbBean.toString());
+//                    System.out.println("DBBean:"+dbBean.toString());
 //                    dbBean.getTableList()
                     for(int i=0;i<dbBean.getTableList().size();i++){
                         if(tableName.equals(dbBean.getTableList().get(i).getTabName())){
                             System.out.println("查找到的table:"+dbBean.getTableList().get(i));
+                            return dbBean.getTableList().get(i).toString();
                         }
                     }
 
-                    Map<String, Object> sourceAsMap = getResponse.getSourceAsMap();  // 结果取成Map
-                    byte[] sourceAsBytes = getResponse.getSourceAsBytes();    //结果取成字节数组
-
-                    logger.info("index:" + index + "  type:" + type + "  id:" + id);
-                    logger.info(sourceAsString);
+//                    Map<String, Object> sourceAsMap = getResponse.getSourceAsMap();  // 结果取成Map
+//                    byte[] sourceAsBytes = getResponse.getSourceAsBytes();    //结果取成字节数组
+//
+//                    logger.info("index:" + index + "  type:" + type + "  id:" + id);
+//                    logger.info(sourceAsString);
 
                 } else {
                     logger.error("没有找到该id的文档");
+                    return "没有找到该id的文档";
                 }
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }

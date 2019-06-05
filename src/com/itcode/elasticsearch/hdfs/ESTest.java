@@ -7,7 +7,8 @@ public class ESTest {
     public static void main(String[] args) {
 //        hdfs_insert();
 //        business_insert();
-        ESUtils.searchTable("hdfs","dim","dim_shop");
+        String searchResult = ESUtils.searchTable("hdfs","dim","dim_shop");
+        System.out.println("查询返回的结果值："+searchResult);
     }
 
     /**
