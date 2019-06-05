@@ -80,11 +80,11 @@
 
 {"dbName": "dim", "tableList": [
   {"tableName": "dim_shop","columns": [
-      {"fieldsName": "dim_shop_id","type": "string","Comment": "门店ID"},
-      {"fieldsName": "shop_code","type": "string","Comment": "门店编码"}]},
+    {"fieldsName": "dim_shop_id","type": "string","Comment": "门店ID"},
+    {"fieldsName": "shop_code","type": "string","Comment": "门店编码"}]},
   {"tableName": "dim_category","columns": [
-      {"fieldsName": "dim_category_id","type": "string","Comment": "品类id"},
-      {"fieldsName": "category_code","type": "string","Comment": "品类编码"}]}]
+    {"fieldsName": "dim_category_id","type": "string","Comment": "品类id"},
+    {"fieldsName": "category_code","type": "string","Comment": "品类编码"}]}]
 }
 
 //{"dbName": "dim", "tableList": [

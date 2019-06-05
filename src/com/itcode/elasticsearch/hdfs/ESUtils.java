@@ -37,7 +37,7 @@ public class ESUtils {
      *
      * @param indexName index 名称
      */
-    public static void createIndex(String indexName) {
+    public static void createIndex(String indexName,String typeName) {
         try (RestHighLevelClient client = InitDemo.getClient();) {
 
             // 1、创建 创建索引request 参数：索引名mess

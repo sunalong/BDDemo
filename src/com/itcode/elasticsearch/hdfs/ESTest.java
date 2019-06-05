@@ -5,11 +5,28 @@ import java.util.List;
 
 public class ESTest {
     public static void main(String[] args) {
-//        ESUtils.createIndex("hdfs");
+//        hdfs_insert();
+        business_insert();
+    }
+
+    /**
+     * 插入hdfs元数据信息到ES中
+     */
+    private static void hdfs_insert() {
+        //        ESUtils.createIndex("hdfs");
 //        String jsonStr = createJsonStr();
-        ESUtils.insertSingle(createJsonStr(), "hdfs", "dim");
+        ESUtils.insertSingle(createJsonStr(), "hdfs", "dm_cjwz");
 //        ESUtils.insertMulti(createJsonList(), "hdfs", "dim");
-        ESUtils.search("hdfs", "dim");
+        ESUtils.search("hdfs", "dm_cjwz");
+    }
+
+    /**
+     * 插入业务数据信息到ES中
+     */
+    private static void business_insert() {
+//        ESUtils.createIndex("business", "bs");
+//        ESUtils.insertSingle(createJsonStr(), "business", "供应链");
+        ESUtils.search("business", "供应链");
     }
 
     private static List<String> createJsonList() {
@@ -96,7 +113,7 @@ public class ESTest {
                 "    \"update_time\":\"更新时间\"\n" +
                 "  }\n" +
                 "}\n";
-        String dimShopJsonStr="{\n" +
+        String dimShopJsonStr = "{\n" +
                 "  \"tableName\": \"dim_shop\",\n" +
                 "  \"fieldsType\": {\n" +
                 "    \"dim_shop_id\":\"string\",\n" +
@@ -190,95 +207,18 @@ public class ESTest {
     }
 
     private static String createJsonStr() {
-        String dimShopJsonStr = "\n" +
-                "{\n" +
-                "\"dbName\": \"dim\", \"tableList\": [{\t\n" +
-                "  \"tabName\": \"dim_shop\",\"columns\": [\t\n" +
-                "      {\"fieldsName\": \"dim_shop_id\",\"type\": \"string\",\"Comment\": \"门店ID\"},\n" +
-                "      {\"fieldsName\": \"shop_code\",\"type\": \"string\",\"Comment\": \"门店编码\"},\n" +
-                "      {\"fieldsName\": \"branch_code\",\"type\": \"string\",\"Comment\": \"分公司编码\"},\n" +
-                "      {\"fieldsName\": \"branch_name\",\"type\": \"string\",\"Comment\": \"分公司名称\"},\n" +
-                "      {\"fieldsName\": \"shop_name\",\"type\": \"string\",\"Comment\": \"门店名称\"},\n" +
-                "      {\"fieldsName\": \"department_id\",\"type\": \"string\",\"Comment\": \"部门ID\"},\n" +
-                "      {\"fieldsName\": \"department_code\",\"type\": \"string\",\"Comment\": \"部门编码\"},\n" +
-                "      {\"fieldsName\": \"department_name\",\"type\": \"string\",\"Comment\": \"部门名称\"},\n" +
-                "      {\"fieldsName\": \"province_id\",\"type\": \"string\",\"Comment\": \"省id\"},\n" +
-                "      {\"fieldsName\": \"province_code\",\"type\": \"string\",\"Comment\": \"省编码\"},\n" +
-                "      {\"fieldsName\": \"province_name\",\"type\": \"string\",\"Comment\": \"省名称\"},\n" +
-                "      {\"fieldsName\": \"city_code\",\"type\": \"string\",\"Comment\": \"城市编码\"},\n" +
-                "      {\"fieldsName\": \"city_name\",\"type\": \"string\",\"Comment\": \"城市名称\"},\n" +
-                "      {\"fieldsName\": \"area_id\",\"type\": \"string\",\"Comment\": \"区/县id\"},\n" +
-                "      {\"fieldsName\": \"area_name\",\"type\": \"string\",\"Comment\": \"区/县名称\"},\n" +
-                "      {\"fieldsName\": \"open_date\",\"type\": \"string\",\"Comment\": \"开店日期\"},\n" +
-                "      {\"fieldsName\": \"close_date\",\"type\": \"string\",\"Comment\": \"闭店日期\"},\n" +
-                "      {\"fieldsName\": \"status\",\"type\": \"string\",\"Comment\": \"门店状态\"},\n" +
-                "      {\"fieldsName\": \"seller_type_id\",\"type\": \"string\",\"Comment\": \"业态类型\"},\n" +
-                "      {\"fieldsName\": \"seller_type_name\",\"type\": \"string\",\"Comment\": \"业态类型名称\"},\n" +
-                "      {\"fieldsName\": \"seller_id\",\"type\": \"string\",\"Comment\": \"业态id\"},\n" +
-                "      {\"fieldsName\": \"seller_name\",\"type\": \"string\",\"Comment\": \"业态名称\"},\n" +
-                "      {\"fieldsName\": \"actual_shop_id\",\"type\": \"string\",\"Comment\": \"报表实际编码\"},\n" +
-                "      {\"fieldsName\": \"are_code\",\"type\": \"string\",\"Comment\": \"营运大区ID\"},\n" +
-                "      {\"fieldsName\": \"are_name\",\"type\": \"string\",\"Comment\": \"营运大区名称\"},\n" +
-                "      {\"fieldsName\": \"org_code\",\"type\": \"string\",\"Comment\": \"大区ID\"},\n" +
-                "      {\"fieldsName\": \"org_name\",\"type\": \"string\",\"Comment\": \"大区名称\"},\n" +
-                "      {\"fieldsName\": \"region_code\",\"type\": \"string\",\"Comment\": \"区域ID\"},\n" +
-                "      {\"fieldsName\": \"region_name\",\"type\": \"string\",\"Comment\": \"区域名称\"},\n" +
-                "      {\"fieldsName\": \"fin_open_date\",\"type\": \"string\",\"Comment\": \"财务维护开业时间\"},\n" +
-                "      {\"fieldsName\": \"actual_open_date\",\"type\": \"string\",\"Comment\": \"实际开业时间\"},\n" +
-                "      {\"fieldsName\": \"longitude\",\"type\": \"string\",\"Comment\": \"经度\"},\n" +
-                "      {\"fieldsName\": \"latitude\",\"type\": \"string\",\"Comment\": \"纬度\"},\n" +
-                "      {\"fieldsName\": \"p_price_code\",\"type\": \"string\",\"Comment\": \"进价群编码\"},\n" +
-                "      {\"fieldsName\": \"p_price_name\",\"type\": \"string\",\"Comment\": \"进价群名称\"},\n" +
-                "      {\"fieldsName\": \"address\",\"type\": \"string\",\"Comment\": \"门店地址\"},\n" +
-                "      {\"fieldsName\": \"source\",\"type\": \"string\",\"Comment\": \"门店来源 1 辉创 2 WMS 3其他(现有门店)\"},\n" +
-                "      {\"fieldsName\": \"is_hc_enabled\",\"type\": \"string\",\"Comment\": \"是否启用辉创系统 0 否 1 是 2 永久启用辉创\"},\n" +
-                "      {\"fieldsName\": \"shop_type\",\"type\": \"string\",\"Comment\": \"门店类型 1:门店 2:配送中心\"},\n" +
-                "      {\"fieldsName\": \"update_time\",\"type\": \"timestamp\",\"Comment\": \"更新时间\"}\n" +
-                "    ]\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \"tabName\": \"dim_category\",\"columns\": [\t\n" +
-                "      {\"fieldsName\": \"dim_category_id\",\"type\": \"string\",\"Comment\": \"品类id\"},\n" +
-                "      {\"fieldsName\": \"category_code\",\"type\": \"string\",\"Comment\": \"品类编码\"},\n" +
-                "      {\"fieldsName\": \"category_name\",\"type\": \"string\",\"Comment\": \"品类名称\"},\n" +
-                "      {\"fieldsName\": \"mcategory_code\",\"type\": \"string\",\"Comment\": \"中类编码\"},\n" +
-                "      {\"fieldsName\": \"mcategory_name\",\"type\": \"string\",\"Comment\": \"中类名称\"},\n" +
-                "      {\"fieldsName\": \"bcategory_code\",\"type\": \"string\",\"Comment\": \"大类编码\"},\n" +
-                "      {\"fieldsName\": \"bcategory_name\",\"type\": \"string\",\"Comment\": \"大类名称\"},\n" +
-                "      {\"fieldsName\": \"workshop_code\",\"type\": \"string\",\"Comment\": \"工坊编码\"},\n" +
-                "      {\"fieldsName\": \"work_shop_name\",\"type\": \"string\",\"Comment\": \"工坊名称\"},\n" +
-                "      {\"fieldsName\": \"old_workshop_code\",\"type\": \"string\",\"Comment\": \"旧工坊编码\"},\n" +
-                "      {\"fieldsName\": \"old_work_shop_name\",\"type\": \"string\",\"Comment\": \"旧工坊名称\"},\n" +
-                "      {\"fieldsName\": \"small_group_code\",\"type\": \"string\",\"Comment\": \"小商行编码\"},\n" +
-                "      {\"fieldsName\": \"small_group_name\",\"type\": \"string\",\"Comment\": \"小商行名称\"},\n" +
-                "      {\"fieldsName\": \"class_code\",\"type\": \"string\",\"Comment\": \"课组编码\"},\n" +
-                "      {\"fieldsName\": \"class_name\",\"type\": \"string\",\"Comment\": \"课组名称\"},\n" +
-                "      {\"fieldsName\": \"class_group_code\",\"type\": \"string\",\"Comment\": \"课组集编码\"},\n" +
-                "      {\"fieldsName\": \"class_group_name\",\"type\": \"string\",\"Comment\": \"课组集名称\"},\n" +
-                "      {\"fieldsName\": \"group_code\",\"type\": \"string\",\"Comment\": \"商行编码\"},\n" +
-                "      {\"fieldsName\": \"group_name\",\"type\": \"string\",\"Comment\": \"商行名称\"},\n" +
-                "      {\"fieldsName\": \"yhlife_group_code\",\"type\": \"string\",\"Comment\": \"永辉生活商行编码\"},\n" +
-                "      {\"fieldsName\": \"yhlife_group_name\",\"type\": \"string\",\"Comment\": \"永辉生活商行名称\"},\n" +
-                "      {\"fieldsName\": \"yhlife_group_code1\",\"type\": \"string\",\"Comment\": \"永辉生活商行编码1\"},\n" +
-                "      {\"fieldsName\": \"yhlife_group_name1\",\"type\": \"string\",\"Comment\": \"永辉生活商行名称1\"},\n" +
-                "      {\"fieldsName\": \"yhlife_group_code2\",\"type\": \"string\",\"Comment\": \"永辉生活商行编码2\"},\n" +
-                "      {\"fieldsName\": \"yhlife_group_name2\",\"type\": \"string\",\"Comment\": \"永辉生活商行名称2\"},\n" +
-                "      {\"fieldsName\": \"species_group_code\",\"type\": \"string\",\"Comment\": \"永辉生活物种编码\"},\n" +
-                "      {\"fieldsName\": \"species_group_name\",\"type\": \"string\",\"Comment\": \"永辉生活物种名称\"},\n" +
-                "      {\"fieldsName\": \"species_group_code1\",\"type\": \"string\",\"Comment\": \"永辉生活物种编码1\"},\n" +
-                "      {\"fieldsName\": \"species_group_name1\",\"type\": \"string\",\"Comment\": \"永辉生活物种名称1\"},\n" +
-                "      {\"fieldsName\": \"species_group_code2\",\"type\": \"string\",\"Comment\": \"永辉生活物种编码2\"},\n" +
-                "      {\"fieldsName\": \"species_group_name2\",\"type\": \"string\",\"Comment\": \"永辉生活物种名称2\"},\n" +
-                "      {\"fieldsName\": \"dept_code\",\"type\": \"string\",\"Comment\": \"部类编码\"},\n" +
-                "      {\"fieldsName\": \"dept_name\",\"type\": \"string\",\"Comment\": \"部类名称\"},\n" +
-                "      {\"fieldsName\": \"goods_dept_code\",\"type\": \"string\",\"Comment\": \"食用品划分代码\"},\n" +
-                "      {\"fieldsName\": \"goods_dept_name\",\"type\": \"string\",\"Comment\": \"食用品划分名称\"},\n" +
-                "      {\"fieldsName\": \"small_shop_code\",\"type\": \"string\",\"Comment\": \"小店编码\"},\n" +
-                "      {\"fieldsName\": \"small_shop_name\",\"type\": \"string\",\"Comment\": \"小店名称\"},\n" +
-                "      {\"fieldsName\": \"update_time\",\"type\": \"timestamp\",\"Comment\": \"更新时间\"}\n" +
-                "  ]}\n" +
-                "]\n" +
-                "}\n";
+        String dimShopJsonStr = "{\"businessName\": \"供应链\", \"db_tableList\": [\n" +
+                "  {\"tableName\": \"dim\",\"tables\": [\n" +
+                "      {\"tableName\": \"dim_shop\",\"Comment\": \"门店维表\"},\n" +
+                "      {\"tableName\": \"dim_category\",\"Comment\": \"种类维表\"},\n" +
+                "      {\"tableName\": \"dim_channel\" ,\"Comment\": \"渠道维表\"}]},\n" +
+                "  {\"tableName\": \"dw\",\"tables\": [\n" +
+                "      {\"tableName\": \"dwb_fct_order\",\"Comment\": \"订单表\"},\n" +
+                "      {\"tableName\": \"dwb_fct_order_header\",\"Comment\": \"订单头表\"}]},\n" +
+                "  {\"tableName\": \"dm\",\"tables\": [\n" +
+                "    {\"tableName\": \"dm_member_sale_date\" ,\"Comment\": \"会员销售日期表\"}]}]\n" +
+                "}";
+//        String dimShopJsonStr ="";
         System.out.println(dimShopJsonStr);
         return dimShopJsonStr;
     }
