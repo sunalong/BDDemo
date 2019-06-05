@@ -87,9 +87,6 @@
       {"fieldsName": "category_code","type": "string","Comment": "品类编码"}]}]
 }
 
-
-
-
 //{"dbName": "dim", "tableList": [
 //  {"tableName": "dim_shop","columns": [{"fieldsName": "dim_shop_id","type": "string","Comment": "门店ID"},{"fieldsName": "shop_code","type": "string","Comment": "门店编码"}]}  ==> ,
 //  {"tableName": "dim_category","columns": [{"fieldsName": "dim_category_id","type": "string","Comment": "品类id"},{"fieldsName": "category_code","type": "string","Comment": "品类编码"}]}  ==> ]
@@ -98,6 +95,11 @@
 
 
 
+//SELECT  DB_ID,NAME
+//from hive.DBS
+//-- WHERE DB_ID in(2691,2984,2998)
+//ORDER by DB_ID
+//-- limit 100
 
 //一：生成数据集
 //注意非空值的判断
@@ -118,23 +120,16 @@
 //SELECT CD_ID,COMMENT,COLUMN_NAME,TYPE_NAME,INTEGER_IDX
 //from hive.COLUMNS_V2
 //)as d on d.CD_ID = c.CD_ID
-//WHERE b.TBL_NAME in('dim_shop','dim_category')
-//--  and a.DB_ID = 2984
+//-- WHERE b.TBL_NAME in('dim_shop','dim_category')
+//WHERE a.DB_ID = 2984
 //order by a.DB_ID,b.TBL_ID,c.CD_ID,d.INTEGER_IDX
 //-- limit 100
 //
 //drop table test.subdata
 
-//二：拼接字符串
-//select DB_ID,TBL_ID, TBL_TYPE, INTEGER_IDX
-//, CONCAT("\"dbName\": \"",NAME,"\", \"tableList\": [{") as db_head
-//, CONCAT("\"tabName\": \"",TBL_NAME,"\",\"columns\": [") as tab_head
-//, CONCAT("{\"fieldsName\": \"",COLUMN_NAME,"\",\"type\": \"",TYPE_NAME,"\",\"Comment\": \"",COMMENT,"\"},") as col_head
-//from test.subdata
 
-
-//三：拼接json
-//set group_concat_max_len=100000000000;
+//二：拼接json
+//set group_concat_max_len=900000000000000;
 //
 //select  a.DB_ID -- 3.将db下的各table拼接在一起
 //, a.TBL_TYPE
@@ -162,4 +157,5 @@
 //group by a.DB_ID
 //, a.TBL_TYPE
 //, a.db_head
+
 
