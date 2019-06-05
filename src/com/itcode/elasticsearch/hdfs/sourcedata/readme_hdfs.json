@@ -1,161 +1,77 @@
 //数据样例如下：每个表一条数据
 
-//{
-//  "dbName": "dim",
-//  "tableList": [{
-//    "tableName": "dim_shop",
-//    "columns": [
-//      {"fieldsName": "dim_shop_id","type": "string","Comment": "门店ID"},
-//      {"fieldsName": "shop_code","type": "string","Comment": "门店编码"}
-//    ]
-//  },
-//    {
-//      "tableName": "dim_category",
-//      "columns": [
-//        {"fieldsName": "dim_category_id","type": "string","Comment": "品类id"},
-//        {"fieldsName": "category_code","type": "string","Comment": "品类编码"}
-//      ]
-//    }
-//  ]
-//}
-
-
-//select  a.DB_ID
-//, a.TBL_ID
-//, a.TBL_TYPE
-//, a.db_head
-//, a.tab_head
-//, group_concat(col_head)
-//from (
-//  select DB_ID,TBL_ID, TBL_TYPE, INTEGER_IDX
-//  , CONCAT("\"dbName\": \"",NAME,"\", \"tableList\": [") as db_head
-//  , CONCAT("{\"tabName\": \"",TBL_NAME,"\",\"columns\": [") as tab_head
-//  , CONCAT("{\"fieldsName\": \"",COLUMN_NAME,"\",\"type\": \"",TYPE_NAME,"\",\"Comment\": \"",COMMENT,"\"},") as col_head
-//  from test.subdata
-//) as a
-//group by a.DB_ID
-//, a.TBL_ID
-//, a.TBL_TYPE
-//, a.db_head
-//, a.tab_head
-
-
-
-//set group_concat_max_len=100000000000;
-//
-//-- select  a.DB_ID
-//-- , a.TBL_ID
-//-- , a.TBL_TYPE
-//-- , a.db_head
-//-- , a.tab_head
-//-- , group_concat(col_head SEPARATOR '')  as col_set
-//-- from (
-//select  a.DB_ID
-//, a.TBL_ID
-//, a.TBL_TYPE
-//, a.db_head
-//-- , a.tab_head
-//, concat(a.tab_head,group_concat(col_head SEPARATOR ','),']}')  as col_set
-//from (
-//select DB_ID,TBL_ID, TBL_TYPE, INTEGER_IDX
-//, CONCAT("{\"dbName\": \"",NAME,"\", \"tableList\": [") as db_head
-//, CONCAT("{\"tabName\": \"",TBL_NAME,"\",\"columns\": [") as tab_head
-//, CONCAT("{\"fieldsName\": \"",COLUMN_NAME,"\",\"type\": \"",TYPE_NAME,"\",\"Comment\": \"",COMMENT,"\"}") as col_head
-//from test.subdata
-//) as a
-//group by a.DB_ID
-//, a.TBL_ID
-//, a.TBL_TYPE
-//, a.db_head
-//, a.tab_head
-//-- )
-//-- group by a.DB_ID
-//-- , a.TBL_ID
-//-- , a.TBL_TYPE
-//-- , a.db_head
-
-
-
 
 
 {"dbName": "dim", "tableList": [
-  {"tableName": "dim_shop","columns": [
+  {"tabName": "dim_shop","columns": [
     {"fieldsName": "dim_shop_id","type": "string","Comment": "门店ID"},
     {"fieldsName": "shop_code","type": "string","Comment": "门店编码"}]},
-  {"tableName": "dim_category","columns": [
+  {"tabName": "dim_category","columns": [
     {"fieldsName": "dim_category_id","type": "string","Comment": "品类id"},
     {"fieldsName": "category_code","type": "string","Comment": "品类编码"}]}]
 }
 
-//{"dbName": "dim", "tableList": [
-//  {"tableName": "dim_shop","columns": [{"fieldsName": "dim_shop_id","type": "string","Comment": "门店ID"},{"fieldsName": "shop_code","type": "string","Comment": "门店编码"}]}  ==> ,
-//  {"tableName": "dim_category","columns": [{"fieldsName": "dim_category_id","type": "string","Comment": "品类id"},{"fieldsName": "category_code","type": "string","Comment": "品类编码"}]}  ==> ]
-//}
+
+/*
+
+    SELECT  DB_ID,NAME
+    from hive.DBS
+    -- WHERE DB_ID in(2691,2984,2998)
+    ORDER by DB_ID
+    -- limit 100
+
+一：生成数据集
+注意非空值的判断
+      create table test.subdata as
+      SELECT  a.DB_ID,a.NAME
+      ,b.TBL_ID,b.TBL_TYPE,b.TBL_NAME
+      ,c.CD_ID
+      ,COALESCE(d.COMMENT,'') as COMMENT,d.COLUMN_NAME,d.TYPE_NAME,d.INTEGER_IDX
+      from hive.DBS as a
+      left join (SELECT TBL_ID,DB_ID,SD_ID,TBL_TYPE,TBL_NAME
+      from hive.TBLS
+      ) as b on b.DB_ID = a.DB_ID
+      left join (
+      SELECT SD_ID,CD_ID
+      from hive.SDS
+      )as c on c.SD_ID = b.SD_ID
+      left join (
+      SELECT CD_ID,COMMENT,COLUMN_NAME,TYPE_NAME,INTEGER_IDX
+      from hive.COLUMNS_V2
+      )as d on d.CD_ID = c.CD_ID
+      -- WHERE b.TBL_NAME in('dim_shop','dim_category')
+      WHERE a.DB_ID = 2984
+      order by a.DB_ID,b.TBL_ID,c.CD_ID,d.INTEGER_IDX
+      -- limit 100
+
+      drop table test.subdata
 
 
+二：拼接json
+      set group_concat_max_len=900000000000000;
+
+      select  a.DB_ID -- 3.将db下的各table拼接在一起
+      , a.db_head
+      , CONCAT(a.db_head,group_concat(col_table_list SEPARATOR ','),']}')  as json_str -- 2.先将各表以逗号拼接为一个list，再将库名头与list拼接，同时以]}结尾
+      from (
+      select  a.DB_ID
+      , a.TBL_ID
+      , a.db_head
+      , concat(a.tab_head,group_concat(col_head SEPARATOR ','),']}')  as col_table_list -- 1.先将各col实体以逗号拼接为一个list，再将表头与list拼接，同时以]}结尾
+      from (
+      select DB_ID,TBL_ID, INTEGER_IDX -- 1.初步组装所需要的 各db、table、col
+      , CONCAT("{\"dbName\": \"",NAME,"\", \"tableList\": [") as db_head
+      , CONCAT("{\"tabName\": \"",TBL_NAME,"\",\"columns\": [") as tab_head
+      , CONCAT("{\"fieldsName\": \"",COLUMN_NAME,"\",\"type\": \"",TYPE_NAME,"\",\"Comment\": \"",COMMENT,"\"}") as col_head
+      from test.subdata
+      ) as a
+      group by a.DB_ID
+      , a.TBL_ID
+      , a.db_head
+      , a.tab_head
+      ) as a
+      group by a.DB_ID
+      , a.db_head
 
 
-//SELECT  DB_ID,NAME
-//from hive.DBS
-//-- WHERE DB_ID in(2691,2984,2998)
-//ORDER by DB_ID
-//-- limit 100
-
-//一：生成数据集
-//注意非空值的判断
-//create table test.subdata as
-//SELECT  a.DB_ID,a.NAME
-//,b.TBL_ID,b.TBL_TYPE,b.TBL_NAME
-//,c.CD_ID
-//,COALESCE(d.COMMENT,'') as COMMENT,d.COLUMN_NAME,d.TYPE_NAME,d.INTEGER_IDX
-//from hive.DBS as a
-//left join (SELECT TBL_ID,DB_ID,SD_ID,TBL_TYPE,TBL_NAME
-//from hive.TBLS
-//) as b on b.DB_ID = a.DB_ID
-//left join (
-//SELECT SD_ID,CD_ID
-//from hive.SDS
-//)as c on c.SD_ID = b.SD_ID
-//left join (
-//SELECT CD_ID,COMMENT,COLUMN_NAME,TYPE_NAME,INTEGER_IDX
-//from hive.COLUMNS_V2
-//)as d on d.CD_ID = c.CD_ID
-//-- WHERE b.TBL_NAME in('dim_shop','dim_category')
-//WHERE a.DB_ID = 2984
-//order by a.DB_ID,b.TBL_ID,c.CD_ID,d.INTEGER_IDX
-//-- limit 100
-//
-//drop table test.subdata
-
-
-//二：拼接json
-//set group_concat_max_len=900000000000000;
-//
-//select  a.DB_ID -- 3.将db下的各table拼接在一起
-//, a.TBL_TYPE
-//, a.db_head
-//, CONCAT(a.db_head,group_concat(col_table_list SEPARATOR ','),']}')  as json_str -- 2.先将各表以逗号拼接为一个list，再将库名头与list拼接，同时以]}结尾
-//from (
-//select  a.DB_ID
-//, a.TBL_ID
-//, a.TBL_TYPE
-//, a.db_head
-//, concat(a.tab_head,group_concat(col_head SEPARATOR ','),']}')  as col_table_list -- 1.先将各col实体以逗号拼接为一个list，再将表头与list拼接，同时以]}结尾
-//from (
-//select DB_ID,TBL_ID, TBL_TYPE, INTEGER_IDX -- 1.初步组装所需要的 各db、table、col
-//, CONCAT("{\"dbName\": \"",NAME,"\", \"tableList\": [") as db_head
-//, CONCAT("{\"tabName\": \"",TBL_NAME,"\",\"columns\": [") as tab_head
-//, CONCAT("{\"fieldsName\": \"",COLUMN_NAME,"\",\"type\": \"",TYPE_NAME,"\",\"Comment\": \"",COMMENT,"\"}") as col_head
-//from test.subdata
-//) as a
-//group by a.DB_ID
-//, a.TBL_ID
-//, a.TBL_TYPE
-//, a.db_head
-//, a.tab_head
-//) as a
-//group by a.DB_ID
-//, a.TBL_TYPE
-//, a.db_head
-
-
+*/

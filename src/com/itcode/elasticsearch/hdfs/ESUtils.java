@@ -1,6 +1,8 @@
 package com.itcode.elasticsearch.hdfs;
 
+import com.alibaba.fastjson.JSONObject;
 import com.itcode.elasticsearch.es_hrset_client.InitDemo;
+import com.itcode.elasticsearch.hdfs.bean.DBBean;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.elasticsearch.ElasticsearchException;
@@ -234,6 +236,81 @@ public class ESUtils {
                 if (getResponse.isExists()) { // 文档存在
                     long version = getResponse.getVersion();
                     String sourceAsString = getResponse.getSourceAsString(); //结果取成 String
+                    Map<String, Object> sourceAsMap = getResponse.getSourceAsMap();  // 结果取成Map
+                    byte[] sourceAsBytes = getResponse.getSourceAsBytes();    //结果取成字节数组
+
+                    logger.info("index:" + index + "  type:" + type + "  id:" + id);
+                    logger.info(sourceAsString);
+
+                } else {
+                    logger.error("没有找到该id的文档");
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 业务 从ES的hdfs中搜索表的信息
+     * @param indexName 存储的源;默认为hdfs
+     * @param idName 表名在的库;如dim
+     * @param tableName 要查的此表的各字段信息;如dim_shop
+     */
+    public static void searchTable(String indexName, String idName,String tableName) {
+        try (RestHighLevelClient client = InitDemo.getClient();) {
+            // 1、创建获取文档请求
+            GetRequest request = new GetRequest(
+                    indexName,   //索引
+                    "_doc",     // mapping type
+                    idName);     //文档id
+//            GetRequest request = new GetRequest("dim_1");
+            // 2、可选的设置
+            //request.routing("routing");
+            //request.version(2);
+
+            //request.fetchSourceContext(new FetchSourceContext(false)); //是否获取_source字段
+            //选择返回的字段
+            String[] includes = new String[]{tableName,"*"};
+            String[] excludes = Strings.EMPTY_ARRAY;
+            FetchSourceContext fetchSourceContext = new FetchSourceContext(true, includes, excludes);
+            request.fetchSourceContext(fetchSourceContext);
+
+            //3、发送请求
+            GetResponse getResponse = null;
+            try {
+                // 同步请求
+                getResponse = client.get(request);
+            } catch (ElasticsearchException e) {
+                if (e.status() == RestStatus.NOT_FOUND) {
+                    logger.error("没有找到该id的文档");
+                }
+                if (e.status() == RestStatus.CONFLICT) {
+                    logger.error("获取时版本冲突了，请在此写冲突处理逻辑！");
+                }
+                logger.error("获取文档异常", e);
+            }
+            System.out.println("-------1" + getResponse);
+            //4、处理响应
+            if (getResponse != null) {
+                String index = getResponse.getIndex();
+                String type = getResponse.getType();
+                String id = getResponse.getId();
+                if (getResponse.isExists()) { // 文档存在
+                    long version = getResponse.getVersion();
+                    String sourceAsString = getResponse.getSourceAsString(); //结果取成 String
+
+                    DBBean dbBean = JSONObject.parseObject(sourceAsString, DBBean.class);
+                    System.out.println("DBBean:"+dbBean.toString());
+//                    dbBean.getTableList()
+                    for(int i=0;i<dbBean.getTableList().size();i++){
+                        if(tableName.equals(dbBean.getTableList().get(i).getTabName())){
+                            System.out.println("查找到的table:"+dbBean.getTableList().get(i));
+                        }
+                    }
+
                     Map<String, Object> sourceAsMap = getResponse.getSourceAsMap();  // 结果取成Map
                     byte[] sourceAsBytes = getResponse.getSourceAsBytes();    //结果取成字节数组
 

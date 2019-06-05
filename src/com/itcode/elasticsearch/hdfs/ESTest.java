@@ -6,7 +6,8 @@ import java.util.List;
 public class ESTest {
     public static void main(String[] args) {
 //        hdfs_insert();
-        business_insert();
+//        business_insert();
+        ESUtils.searchTable("hdfs","dim","dim_shop");
     }
 
     /**
@@ -25,7 +26,7 @@ public class ESTest {
      */
     private static void business_insert() {
 //        ESUtils.createIndex("business", "bs");
-//        ESUtils.insertSingle(createJsonStr(), "business", "供应链");
+        ESUtils.insertSingle(createJsonStr(), "business", "供应链");
         ESUtils.search("business", "供应链");
     }
 
@@ -208,14 +209,14 @@ public class ESTest {
 
     private static String createJsonStr() {
         String dimShopJsonStr = "{\"businessName\": \"供应链\", \"db_tableList\": [\n" +
-                "  {\"tableName\": \"dim\",\"tables\": [\n" +
-                "      {\"tableName\": \"dim_shop\",\"Comment\": \"门店维表\"},\n" +
-                "      {\"tableName\": \"dim_category\",\"Comment\": \"种类维表\"},\n" +
-                "      {\"tableName\": \"dim_channel\" ,\"Comment\": \"渠道维表\"}]},\n" +
-                "  {\"tableName\": \"dw\",\"tables\": [\n" +
-                "      {\"tableName\": \"dwb_fct_order\",\"Comment\": \"订单表\"},\n" +
-                "      {\"tableName\": \"dwb_fct_order_header\",\"Comment\": \"订单头表\"}]},\n" +
-                "  {\"tableName\": \"dm\",\"tables\": [\n" +
+                "  {\"dbName\": \"dim\",\"tables\": [\n" +
+                "    {\"tableName\": \"dim_shop\",\"Comment\": \"门店维表\"},\n" +
+                "    {\"tableName\": \"dim_category\",\"Comment\": \"种类维表\"},\n" +
+                "    {\"tableName\": \"dim_channel\"x ,\"Comment\": \"渠道维表\"}]},\n" +
+                "  {\"dbName\": \"dw\",\"tables\": [\n" +
+                "    {\"tableName\": \"dwb_fct_order\",\"Comment\": \"订单表\"},\n" +
+                "    {\"tableName\": \"dwb_fct_order_header\",\"Comment\": \"订单头表\"}]},\n" +
+                "  {\"dbName\": \"dm\",\"tables\": [\n" +
                 "    {\"tableName\": \"dm_member_sale_date\" ,\"Comment\": \"会员销售日期表\"}]}]\n" +
                 "}";
 //        String dimShopJsonStr ="";
